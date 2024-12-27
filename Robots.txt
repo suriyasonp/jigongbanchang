@@ -1,0 +1,4 @@
+# robots.txt
+User-agent: *
+Allow: /
+Sitemap: https://suriyasonp.github.io/jigongbanchang/sitemap.xml
