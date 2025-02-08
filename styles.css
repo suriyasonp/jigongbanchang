@@ -142,3 +142,33 @@ footer {
     padding: 1rem;
     margin-top: auto;
 }
+
+.post {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post h3 {
+    margin-top: 0;
+    color: #c52121;
+}
+
+.post p {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    gap: 0.5rem 1rem;
+    line-height: 1.6;
+    margin-left: 10%;
+}
+
+.post p span {
+    text-align: left;
+}
+
+.post p span:first-child {
+    font-weight: bold;
+}
