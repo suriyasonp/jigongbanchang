@@ -190,12 +190,13 @@ footer {
     }
 
     .post p {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: 20% 80%;
         margin-left: 5%;
     }
 
     .post p span {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         /* ปรับขนาดตัวอักษรให้เล็กลง */
     }
 
