@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <title>คำลิขิตจากเทวอาจารย์</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="header-container"></div>
+
+    <main>
+        <div>
+            <h2>คำลิขิตจากเทวอาจารย์</h2>
+            <img src="assets/images/tewaajarn.jpg" style="width: 40%; margin-bottom: 20px;" alt="Tewaajarn">
+        </div>
+
+        <p style="text-align: left;">คลิกแต่ละโพสต์เพื่อดูคำกลอน</p>
+        <div id="posts-container"></div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="script.js"></script>
+    <script src="page.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('assets/posts/posts.json')
+                .then(response => response.json())
+                .then(files => {
+                    files.forEach(filename => {
+                        fetch(`assets/posts/${filename}`)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`Cannot GET ${filename}`);
+                                }
+                                return response.text();
+                            })
+                            .then(data => {
+                                const lines = data.split('\n');
+                                const title = lines.shift(); // แยกบรรทัดแรกออกมาเป็น title
+
+                                console.log('Title:', title); // Debug title
+                                console.log('Lines:', lines); // Debug lines
+
+                                const postContainer = document.createElement('div');
+                                postContainer.classList.add('post');
+                                const postTitle = document.createElement('h3');
+                                postTitle.setAttribute('onclick', `toggleContent(this, '${filename}')`);
+                                postTitle.innerHTML = `${title} <span class="toggle-symbol">[+]</span>`;
+                                const postContent = document.createElement('div');
+                                postContent.classList.add('content');
+                                postContent.style.display = 'none';
+                                postContainer.appendChild(postTitle);
+                                postContainer.appendChild(postContent);
+                                document.getElementById('posts-container').appendChild(postContainer);
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
+                    });
+                });
+        });
+
+        function toggleContent(element, filename) {
+            const content = element.nextElementSibling;
+            const symbol = element.querySelector('.toggle-symbol');
+            if (content.style.display === "none") {
+                fetch(`assets/posts/${filename}`)
+                    .then(response => response.text())
+                    .then(data => {
+                        const lines = data.split('\n');
+                        lines.shift(); // ลบ title ที่แสดงแล้ว
+                        console.log('Content Lines:', lines); // Debug content lines
+                        content.innerHTML = '<p>' + lines.map(line => {
+                            const [first, second] = line.split(' ');
+                            return `<span>${first}</span> <span>${second}</span>`;
+                        }).join('') + '</p>';
+                        content.style.display = "block";
+                        symbol.textContent = "[-]";
+                    });
+            } else {
+                content.style.display = "none";
+                symbol.textContent = "[+]";
+            }
+        }
+    </script>
+</body>
+
+</html>
