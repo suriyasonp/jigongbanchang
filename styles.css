@@ -163,6 +163,7 @@ footer {
     grid-template-columns: 20% 80%;
     gap: 0.5rem 1rem;
     line-height: 1.6;
+    margin-left: 10%;
 }
 
 .post p span {
@@ -190,6 +191,7 @@ footer {
 
     .post p {
         grid-template-columns: 1fr;
+        margin-left: 5%;
     }
 
     .post p span {
